@@ -3,7 +3,6 @@ package com.mvp.demo.sortmvp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -15,13 +14,16 @@ import com.mvp.demo.sortmvp.di.App;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity implements SortMethodView {
-    private RadioGroup rgSortMethods;
-    private RadioButton radioMethod;
-    private EditText txtInputValues;
-    private Button btnSort;
-    private ProgressBar progressBar;
-    private TextView tvResultLabel, tvResult;
+    @BindView(R.id.rgSortMethods) RadioGroup rgSortMethods;
+    @BindView(R.id.txtInputValues) EditText txtInputValues;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.tvResultLabel) TextView tvResultLabel;
+    @BindView(R.id.tvResult) TextView tvResult;
     @Inject
     SortMethodPresenter presenter;
 
@@ -31,18 +33,7 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
         setContentView(R.layout.activity_main);
         ((App) getApplication()).getComponent().inject(this);
         // Bind UI components
-        rgSortMethods = (RadioGroup)findViewById(R.id.rgSortMethods);
-        txtInputValues = (EditText) findViewById(R.id.txtInputValues);
-        btnSort = (Button) findViewById(R.id.btnSort);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        tvResultLabel = (TextView) findViewById(R.id.tvResultLabel);
-        tvResult = (TextView) findViewById(R.id.tvResult);
-        btnSort.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getValues();
-            }
-        });
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -53,12 +44,13 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
         hideProgressBar();
     }
 
+    @OnClick(R.id.btnSort)
     @Override
     public void getValues() {
         try {
             // Get sort method selected
             int selectedId = rgSortMethods.getCheckedRadioButtonId();
-            radioMethod = (RadioButton)findViewById(selectedId);
+            RadioButton radioMethod = (RadioButton)findViewById(selectedId);
             // Get input values
             String method = radioMethod.getText().toString();
             String values = txtInputValues.getText().toString();
