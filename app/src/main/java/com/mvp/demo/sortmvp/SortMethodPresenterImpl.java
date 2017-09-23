@@ -21,26 +21,29 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
     @Override
     public void sortValues(String method, String values) {
         view.showProgressBar();
-        // Parse input values from string to int array
-        int[] inputValues = convertInputValues(values);
-        // Create object of sort method
-        switch (method) {
-            case "BubbleSort":
-                sortMethod = new BubbleSort();
-                break;
-            case "MergeSort":
-                sortMethod = new MergeSort();
-                break;
-            case "QuickSort":
-                sortMethod = new QuickSort();
-                break;
+        // Validate parameters
+        if (method != null && values != null) {
+            // Parse input values from string to int array
+            int[] inputValues = convertInputValues(values);
+            // Get sort method
+            switch (method) {
+                case "BubbleSort":
+                    sortMethod = new BubbleSort();
+                    break;
+                case "MergeSort":
+                    sortMethod = new MergeSort();
+                    break;
+                case "QuickSort":
+                    sortMethod = new QuickSort();
+                    break;
+            }
+            // Get result
+            int[] outputValues = sortMethod.sort(inputValues);
+            // Return the result
+            view.showResultLabel();
+            view.showResult(convertOutputValues(outputValues));
+            view.hideProgressBar();
         }
-        // Get result
-        int[] outputValues = sortMethod.sort(inputValues);
-        // Return the result
-        view.showResultLabel();
-        view.showResult(convertOutputValues(outputValues));
-        view.hideProgressBar();
     }
 
     private int[] convertInputValues(String values) {

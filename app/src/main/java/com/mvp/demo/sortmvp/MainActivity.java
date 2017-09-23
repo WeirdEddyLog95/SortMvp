@@ -52,13 +52,17 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
 
     @Override
     public void getValues() {
-        // Get sort method selected
-        int selectedId = rgSortMethods.getCheckedRadioButtonId();
-        radioMethod = (RadioButton)findViewById(selectedId);
-        // Get input values
-        String method = radioMethod.getText().toString();
-        String values = txtInputValues.getText().toString();
-        presenter.sortValues(method, values);
+        try {
+            // Get sort method selected
+            int selectedId = rgSortMethods.getCheckedRadioButtonId();
+            radioMethod = (RadioButton)findViewById(selectedId);
+            // Get input values
+            String method = radioMethod.getText().toString();
+            String values = txtInputValues.getText().toString();
+            presenter.sortValues(method, values);
+        } catch (Exception e) {
+            Toast.makeText(this, "Introduce los parámetros requeridos", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -83,8 +87,10 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
 
     @Override
     public void showResult(String result) {
-        rgSortMethods.check(0);
-        txtInputValues.setText("");
-        tvResult.setText(result);
+        if (result != null && result != "") {
+            rgSortMethods.check(0);
+            txtInputValues.setText("");
+            tvResult.setText(result);
+        }
     }
 }
