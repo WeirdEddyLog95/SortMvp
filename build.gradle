@@ -30,4 +30,5 @@ ext {
     buildToolsVersion = '26.0.1'
     supportLibraryVersion = '26.+'
     junitVersion = '4.12'
+    mockitoVersion = '2.+'
 }
