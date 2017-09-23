@@ -11,7 +11,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mvp.demo.sortmvp.methods.SortMethod;
+import com.mvp.demo.sortmvp.di.App;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements SortMethodView {
     private RadioGroup rgSortMethods;
@@ -20,12 +22,14 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
     private Button btnSort;
     private ProgressBar progressBar;
     private TextView tvResultLabel, tvResult;
-    private SortMethodPresenter presenter;
+    @Inject
+    SortMethodPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ((App) getApplication()).getComponent().inject(this);
         // Bind UI components
         rgSortMethods = (RadioGroup)findViewById(R.id.rgSortMethods);
         txtInputValues = (EditText) findViewById(R.id.txtInputValues);
@@ -33,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         tvResultLabel = (TextView) findViewById(R.id.tvResultLabel);
         tvResult = (TextView) findViewById(R.id.tvResult);
-        presenter = new SortMethodPresenterImpl();
-        presenter.setView(this);
         btnSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
     @Override
     protected void onResume() {
         super.onResume();
+        presenter.setView(this);
         hideResultLabel();
         hideProgressBar();
     }
