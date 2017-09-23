@@ -31,4 +31,5 @@ ext {
     supportLibraryVersion = '26.+'
     junitVersion = '4.12'
     mockitoVersion = '2.+'
+    daggerVersion = '2.11'
 }
