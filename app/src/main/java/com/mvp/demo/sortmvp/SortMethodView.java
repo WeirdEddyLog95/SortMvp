@@ -11,4 +11,5 @@ public interface SortMethodView {
     void showProgressBar();
     void hideProgressBar();
     void showResult(String result);
+    void resetValues();
 }

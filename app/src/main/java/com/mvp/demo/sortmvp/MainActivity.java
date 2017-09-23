@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
         hideProgressBar();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        presenter.setView(null);
+    }
+
     @OnClick(R.id.btnSort)
     @Override
     public void getValues() {
@@ -83,9 +89,13 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
     @Override
     public void showResult(String result) {
         if (result != null && result != "") {
-            rgSortMethods.check(0);
-            txtInputValues.setText("");
             tvResult.setText(result);
         }
+    }
+
+    @Override
+    public void resetValues() {
+        rgSortMethods.check(0);
+        txtInputValues.setText("");
     }
 }

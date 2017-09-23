@@ -20,29 +20,32 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
 
     @Override
     public void sortValues(String method, String values) {
-        view.showProgressBar();
-        // Validate parameters
-        if (method != null && values != null) {
-            // Parse input values from string to int array
-            int[] inputValues = convertInputValues(values);
-            // Get sort method
-            switch (method) {
-                case "BubbleSort":
-                    sortMethod = new BubbleSort();
-                    break;
-                case "MergeSort":
-                    sortMethod = new MergeSort();
-                    break;
-                case "QuickSort":
-                    sortMethod = new QuickSort();
-                    break;
+        if (view != null) {
+            view.showProgressBar();
+            // Validate parameters
+            if (method != null && values != null) {
+                // Parse input values from string to int array
+                int[] inputValues = convertInputValues(values);
+                // Get sort method
+                switch (method) {
+                    case "BubbleSort":
+                        sortMethod = new BubbleSort();
+                        break;
+                    case "MergeSort":
+                        sortMethod = new MergeSort();
+                        break;
+                    case "QuickSort":
+                        sortMethod = new QuickSort();
+                        break;
+                }
+                // Get result
+                int[] outputValues = sortMethod.sort(inputValues);
+                // Return the result
+                view.hideProgressBar();
+                view.showResultLabel();
+                view.showResult(convertOutputValues(outputValues));
+                view.resetValues();
             }
-            // Get result
-            int[] outputValues = sortMethod.sort(inputValues);
-            // Return the result
-            view.showResultLabel();
-            view.showResult(convertOutputValues(outputValues));
-            view.hideProgressBar();
         }
     }
 
