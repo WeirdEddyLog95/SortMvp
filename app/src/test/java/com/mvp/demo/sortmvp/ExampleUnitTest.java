@@ -18,12 +18,14 @@ import static org.mockito.Mockito.when;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+    SortMethodPresenter presenter;
     SortMethod method = null;
     int[] inputValues, outputValues;
 
     @Before
     public void setup() {
         inputValues = new int[]{3, 52, 12, 94, 83};
+        presenter = new SortMethodPresenterImpl();
     }
 
     @Test
@@ -53,5 +55,22 @@ public class ExampleUnitTest {
         method = new QuickSort();
         outputValues = method.sort(inputValues);
         Assert.assertTrue(94 == outputValues[4]);
+    }
+
+    @Test
+    public void testConvertInputValues() {
+        String values = " 3, 52, 12,94, 83,";
+        outputValues = presenter.convertInputValues(values);
+        Assert.assertTrue(94 == outputValues[3]);
+    }
+
+    @Test
+    public void testConvertOutputValues() {
+        String values = " 3, 52, 12,94, 83,";
+        method = new QuickSort();
+        inputValues = presenter.convertInputValues(values);
+        outputValues = method.sort(inputValues);
+        String result = presenter.convertOutputValues(outputValues);
+        Assert.assertEquals("3, 12, 52, 83, 94", result);
     }
 }

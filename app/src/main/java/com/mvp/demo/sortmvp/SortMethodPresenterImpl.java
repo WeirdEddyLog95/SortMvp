@@ -49,18 +49,23 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
         }
     }
 
-    private int[] convertInputValues(String values) {
+    @Override
+    public int[] convertInputValues(String values) {
         String[] inputValues = values.split(",");
         int[] n = new int[inputValues.length];
 
         for (int i = 0; i < inputValues.length; i++) {
-            n[i] = Integer.parseInt(inputValues[i]);
+            String val = inputValues[i].trim();
+            if (inputValues[i] != "") {
+                n[i] = Integer.parseInt(val);
+            }
         }
 
         return n;
     }
 
-    private String convertOutputValues(int[] values) {
+    @Override
+    public String convertOutputValues(int[] values) {
         String result = "";
 
         for (int i = 0; i < values.length; i++) {

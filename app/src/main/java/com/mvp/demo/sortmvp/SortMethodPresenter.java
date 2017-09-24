@@ -9,4 +9,6 @@ import com.mvp.demo.sortmvp.methods.SortMethod;
 public interface SortMethodPresenter {
     void setView(SortMethodView view);
     void sortValues(String method, String values);
+    int[] convertInputValues(String values);
+    String convertOutputValues(int[] values);
 }
