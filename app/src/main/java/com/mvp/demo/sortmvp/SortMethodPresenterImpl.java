@@ -19,31 +19,40 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
     }
 
     @Override
-    public void sortValues(String method, String values) {
-        if (view != null) {
+    public void setSortMethod(String method) {
+        // Get sort method
+        switch (method) {
+            case "BubbleSort":
+                this.sortMethod = new BubbleSort();
+                break;
+            case "MergeSort":
+                this.sortMethod = new MergeSort();
+                break;
+            case "QuickSort":
+                this.sortMethod = new QuickSort();
+                break;
+        }
+    }
+
+    @Override
+    public SortMethod getSortMethod() {
+        return sortMethod;
+    }
+
+    @Override
+    public void sortValues(String values) {
+        // Validate parameters
+        if ((view != null)) {
             view.showProgressBar();
-            // Validate parameters
-            if (method != null && values != null) {
+            if ((getSortMethod() != null) && (values != null)) {
                 // Parse input values from string to int array
                 int[] inputValues = convertInputValues(values);
-                // Get sort method
-                switch (method) {
-                    case "BubbleSort":
-                        sortMethod = new BubbleSort();
-                        break;
-                    case "MergeSort":
-                        sortMethod = new MergeSort();
-                        break;
-                    case "QuickSort":
-                        sortMethod = new QuickSort();
-                        break;
-                }
                 // Get result
-                int[] outputValues = sortMethod.sort(inputValues);
+                int[] outputValues = getSortMethod().sort(inputValues);
                 // Return the result
                 view.hideProgressBar();
                 view.showResultLabel();
-                view.showResult(convertOutputValues(outputValues));
+                view.showResult(setFormatOutputValues(outputValues));
                 view.showBtnClear();
                 view.resetValues();
             }
@@ -57,8 +66,15 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
 
         for (int i = 0; i < inputValues.length; i++) {
             String val = inputValues[i].trim();
-            if (!inputValues[i].equals("")) {
-                n[i] = Integer.parseInt(val);
+            try {
+                if (!val.equals("")) {
+                    n[i] = Integer.parseInt(val);
+                }
+            } catch (NumberFormatException nfe) {
+                val = val.replaceAll("(?<=\\d) +(?=\\d)", "");
+                if (val.matches("\\d+")) {
+                    n[i] = Integer.parseInt(val);
+                }
             }
         }
 
@@ -66,7 +82,7 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
     }
 
     @Override
-    public String convertOutputValues(int[] values) {
+    public String setFormatOutputValues(int[] values) {
         String result = "";
 
         for (int i = 0; i < values.length; i++) {

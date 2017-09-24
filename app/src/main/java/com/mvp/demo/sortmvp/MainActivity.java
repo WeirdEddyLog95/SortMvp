@@ -63,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
             RadioButton radioMethod = (RadioButton) findViewById(selectedId);
             // Get input values
             String method = radioMethod.getText().toString();
+            presenter.setSortMethod(method);
             String values = txtInputValues.getText().toString();
-            presenter.sortValues(method, values);
+            presenter.sortValues(values);
         } catch (Exception e) {
-            Toast.makeText(this, "Introduce los parámetros requeridos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Introduce los parámetros solicitados en el formato correcto", Toast.LENGTH_SHORT).show();
         }
     }
 

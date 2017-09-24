@@ -65,12 +65,35 @@ public class ExampleUnitTest {
     }
 
     @Test
+    public void testRegexToRemoveSpaceBetweenNumbers() {
+        String values = " 3, 52, 1 2,94, 8 3,";
+        outputValues = presenter.convertInputValues(values);
+        Assert.assertTrue(12 == outputValues[2]);
+    }
+
+    @Test
+    public void testValidationDigits() {
+        String values = " 3, 5S, 12,9A, 83,";
+        outputValues = presenter.convertInputValues(values);
+        Assert.assertTrue(83 == outputValues[4]);
+    }
+
+    @Test
+    public void testSortOnlyNumbers() {
+        String values = " 3, 5S, 12,9A, 83,";
+        method = new QuickSort();
+        inputValues = presenter.convertInputValues(values);
+        outputValues = method.sort(inputValues);
+        Assert.assertTrue(83 == outputValues[4]);
+    }
+
+    @Test
     public void testConvertOutputValues() {
         String values = " 3, 52, 12,94, 83,";
         method = new QuickSort();
         inputValues = presenter.convertInputValues(values);
         outputValues = method.sort(inputValues);
-        String result = presenter.convertOutputValues(outputValues);
+        String result = presenter.setFormatOutputValues(outputValues);
         Assert.assertEquals("3, 12, 52, 83, 94", result);
     }
 }

@@ -8,7 +8,9 @@ import com.mvp.demo.sortmvp.methods.SortMethod;
 
 public interface SortMethodPresenter {
     void setView(SortMethodView view);
-    void sortValues(String method, String values);
+    void setSortMethod(String method);
+    SortMethod getSortMethod();
+    void sortValues(String values);
     int[] convertInputValues(String values);
-    String convertOutputValues(int[] values);
+    String setFormatOutputValues(int[] values);
 }

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.mvp.demo.sortmvp.MainActivity"
-    android:orientation="vertical">
+    tools:context="com.mvp.demo.sortmvp.MainActivity">
 
     <LinearLayout
         android:id="@+id/layoutSortMethods"
@@ -72,7 +71,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/inputValues_example"
-        android:inputType="none"
+        android:inputType="textMultiLine"
         android:layout_below="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_marginTop="15dp"
@@ -82,7 +81,6 @@
         android:id="@+id/btnSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:text="@string/btnSort_title"
         android:layout_below="@+id/txtInputValues"
         android:layout_centerHorizontal="true" />
@@ -92,7 +90,6 @@
         style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_below="@+id/btnSort"
         android:layout_centerHorizontal="true" />
 
@@ -102,7 +99,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/progressBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         android:text="@string/result" />
