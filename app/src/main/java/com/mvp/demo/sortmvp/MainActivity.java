@@ -3,6 +3,7 @@ package com.mvp.demo.sortmvp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.tvResultLabel) TextView tvResultLabel;
     @BindView(R.id.tvResult) TextView tvResult;
+    @BindView(R.id.btnClear) Button btnClear;
+
     @Inject
     SortMethodPresenter presenter;
 
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
         presenter.setView(this);
         hideResultLabel();
         hideProgressBar();
+        hideBtnClear();
     }
 
     @Override
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
         try {
             // Get sort method selected
             int selectedId = rgSortMethods.getCheckedRadioButtonId();
-            RadioButton radioMethod = (RadioButton)findViewById(selectedId);
+            RadioButton radioMethod = (RadioButton) findViewById(selectedId);
             // Get input values
             String method = radioMethod.getText().toString();
             String values = txtInputValues.getText().toString();
@@ -87,10 +91,28 @@ public class MainActivity extends AppCompatActivity implements SortMethodView {
     }
 
     @Override
+    public void showBtnClear() {
+        btnClear.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideBtnClear() {
+        btnClear.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showResult(String result) {
-        if (result != null && result != "") {
+        if (result != null && !result.equals("")) {
             tvResult.setText(result);
         }
+    }
+
+    @OnClick(R.id.btnClear)
+    public void clearValues() {
+        resetValues();
+        hideResultLabel();
+        tvResult.setText("");
+        hideBtnClear();
     }
 
     @Override

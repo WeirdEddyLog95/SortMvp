@@ -4,5 +4,6 @@
     <string name="inputValues_header">Introduce los números a ordenar</string>
     <string name="inputValues_example">Por ejemplo: 1, 2, ... , 4, 5</string>
     <string name="btnSort_title">Ordenar</string>
+    <string name="btnClear_title">Limpiar</string>
     <string name="result">Resultado</string>
 </resources>

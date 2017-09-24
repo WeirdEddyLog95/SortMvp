@@ -44,6 +44,7 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
                 view.hideProgressBar();
                 view.showResultLabel();
                 view.showResult(convertOutputValues(outputValues));
+                view.showBtnClear();
                 view.resetValues();
             }
         }
@@ -56,7 +57,7 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
 
         for (int i = 0; i < inputValues.length; i++) {
             String val = inputValues[i].trim();
-            if (inputValues[i] != "") {
+            if (!inputValues[i].equals("")) {
                 n[i] = Integer.parseInt(val);
             }
         }

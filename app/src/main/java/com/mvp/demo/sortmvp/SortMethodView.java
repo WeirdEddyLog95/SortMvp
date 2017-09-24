@@ -10,6 +10,8 @@ public interface SortMethodView {
     void hideResultLabel();
     void showProgressBar();
     void hideProgressBar();
+    void showBtnClear();
+    void hideBtnClear();
     void showResult(String result);
     void resetValues();
 }

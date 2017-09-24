@@ -116,4 +116,12 @@
         android:textColor="@android:color/black"
         android:textSize="20dp"
         android:layout_marginTop="13dp" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvResult"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btnClear_title" />
 </RelativeLayout>
