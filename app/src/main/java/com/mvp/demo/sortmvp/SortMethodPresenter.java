@@ -11,6 +11,4 @@ public interface SortMethodPresenter {
     void setSortMethod(String method);
     SortMethod getSortMethod();
     void sortValues(String values);
-    int[] convertInputValues(String values);
-    String setFormatOutputValues(int[] values);
 }

@@ -1,5 +1,7 @@
 package com.mvp.demo.sortmvp;
 
+import android.os.AsyncTask;
+
 import com.mvp.demo.sortmvp.methods.BubbleSort;
 import com.mvp.demo.sortmvp.methods.MergeSort;
 import com.mvp.demo.sortmvp.methods.QuickSort;
@@ -45,54 +47,72 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
         if ((view != null)) {
             view.showProgressBar();
             if ((getSortMethod() != null) && (values != null)) {
-                // Parse input values from string to int array
-                int[] inputValues = convertInputValues(values);
-                // Get result
-                int[] outputValues = getSortMethod().sort(inputValues);
-                // Return the result
-                view.hideProgressBar();
-                view.showResultLabel();
-                view.showResult(setFormatOutputValues(outputValues));
-                view.showBtnClear();
-                view.resetValues();
+                new SortValuesTask(view).execute(values);
             }
         }
     }
 
-    @Override
-    public int[] convertInputValues(String values) {
-        String[] inputValues = values.split(",");
-        int[] n = new int[inputValues.length];
+    private class SortValuesTask extends AsyncTask<String, Void, String> {
+        private int[] inputValues, outputValues;
+        private SortMethodView view;
 
-        for (int i = 0; i < inputValues.length; i++) {
-            String val = inputValues[i].trim();
-            try {
-                if (!val.equals("")) {
-                    n[i] = Integer.parseInt(val);
-                }
-            } catch (NumberFormatException nfe) {
-                val = val.replaceAll("(?<=\\d) +(?=\\d)", "");
-                if (val.matches("\\d+")) {
-                    n[i] = Integer.parseInt(val);
-                }
-            }
+        SortValuesTask(SortMethodView view) {
+            this.view = view;
         }
 
-        return n;
-    }
+        int[] convertInputValues(String values) {
+            String[] inputValues = values.split(",");
+            int[] n = new int[inputValues.length];
 
-    @Override
-    public String setFormatOutputValues(int[] values) {
-        String result = "";
-
-        for (int i = 0; i < values.length; i++) {
-            if (i < (values.length - 1)) {
-                result += values[i] + ", ";
-            } else {
-                result += values[i];
+            for (int i = 0; i < inputValues.length; i++) {
+                String val = inputValues[i].trim();
+                try {
+                    if (!val.equals("")) {
+                        n[i] = Integer.parseInt(val);
+                    }
+                } catch (NumberFormatException nfe) {
+                    val = val.replaceAll("(?<=\\d) +(?=\\d)", "");
+                    if (val.matches("\\d+")) {
+                        n[i] = Integer.parseInt(val);
+                    }
+                }
             }
+
+            return n;
         }
 
-        return result;
+        String setFormatOutputValues(int[] values) {
+            String result = "";
+
+            for (int i = 0; i < values.length; i++) {
+                if (i < (values.length - 1)) {
+                    result += values[i] + ", ";
+                } else {
+                    result += values[i];
+                }
+            }
+
+            return result;
+        }
+
+        @Override
+        protected String doInBackground(String... values) {
+            // Parse to int input values
+            inputValues = convertInputValues(values[0]);
+            // Get result
+            outputValues = getSortMethod().sort(inputValues);
+            return setFormatOutputValues(outputValues);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            // Return the result
+            view.hideProgressBar();
+            view.showResultLabel();
+            view.showBtnClear();
+            view.resetValues();
+            view.showResult(result);
+        }
     }
 }
