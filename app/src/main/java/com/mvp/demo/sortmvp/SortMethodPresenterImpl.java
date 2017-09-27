@@ -33,6 +33,9 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
             case "QuickSort":
                 this.sortMethod = new QuickSort();
                 break;
+            default:
+                this.sortMethod = null;
+                break;
         }
     }
 
@@ -46,9 +49,8 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
         // Validate parameters
         if ((view != null)) {
             view.showProgressBar();
-            if ((getSortMethod() != null) && (values != null)) {
+            if ((getSortMethod() != null) && (values != null))
                 new SortValuesTask(view).execute(values);
-            }
         }
     }
 
@@ -67,9 +69,8 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
             for (int i = 0; i < inputValues.length; i++) {
                 String val = inputValues[i].trim();
                 try {
-                    if (!val.equals("")) {
+                    if (!val.equals(""))
                         n[i] = Integer.parseInt(val);
-                    }
                 } catch (NumberFormatException nfe) {
                     val = val.replaceAll("(?<=\\d) +(?=\\d)", "");
                     if (val.matches("\\d+")) {
@@ -85,11 +86,10 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
             String result = "";
 
             for (int i = 0; i < values.length; i++) {
-                if (i < (values.length - 1)) {
+                if (i < (values.length - 1))
                     result += values[i] + ", ";
-                } else {
+                else
                     result += values[i];
-                }
             }
 
             return result;
@@ -109,10 +109,12 @@ public class SortMethodPresenterImpl implements SortMethodPresenter {
             super.onPostExecute(result);
             // Return the result
             view.hideProgressBar();
-            view.showResultLabel();
             view.showBtnClear();
             view.resetValues();
-            view.showResult(result);
+            if (result != null)
+                view.showResult(result);
+            else
+                view.showResult("");
         }
     }
 }

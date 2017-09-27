@@ -6,8 +6,6 @@ package com.mvp.demo.sortmvp;
 
 public interface SortMethodView {
     void getValues();
-    void showResultLabel();
-    void hideResultLabel();
     void showProgressBar();
     void hideProgressBar();
     void showBtnClear();
